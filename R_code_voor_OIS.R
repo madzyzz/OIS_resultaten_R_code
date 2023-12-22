@@ -163,3 +163,28 @@ grafiek <- ggplot(data, aes(x = reorder(Categorie, -AlphaScore), y = AlphaScore,
 
 # Toon de grafiek
 print(grafiek)
+
+
+# Installeren en laden van benodigde pakketten
+install.packages("ggplot2")
+library(ggplot2)
+
+# Definiëren van de categorieën en hun respectievelijke scores
+categories <- c('Aantrekkelijkheid', 'Transparantie', 'Efficiëntie', 'Bestuurbaarheid', 'Stimulatie', 'Originaliteit')
+scores <- c(0.047, 0.903, 0.315, 0.129, -0.397, -0.105)
+
+# Omzetten van de categorieën en scores naar een dataframe
+data <- data.frame(Categorie = categories, Score = scores)
+
+# Aanmaken van de staafdiagram met ggplot
+p <- ggplot(data, aes(x=Categorie, y=Score, fill=Categorie)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values=c('#1f77b4', '#2ca02c', '#ff7f0e', '#d62728', '#9467bd', '#8c564b')) +
+  geom_hline(yintercept = 0, color='grey', linetype="dotted") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size=rel(0.8))) + # Kleiner lettertype voor de x-as labels
+  labs(x='UX Categorieën', y='Gemiddelde UX Score per Categorie', 
+       title='User Experience Vragenlijst Gemiddelde Resultaten per Categorie')
+
+# Printen van de staafdiagram
+print(p)
